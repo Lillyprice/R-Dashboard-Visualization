@@ -1,0 +1,197 @@
+---
+title: "STAT 408 Project Proposal"
+author: "Sierra Schall"
+date: today 
+format: 
+  dashboard:
+    nav-buttons: [github]
+    github: https://github.com/Lillyprice/R-Dashboard-Visualization.git
+    theme: [sandstone, theme/custom.color]
+    orientation: rows
+    scrolling: true
+editor_options: 
+  chunk_output_type: console
+--- 
+
+The project team is Lilly Price and Sierra Schall, and we are planning to work with Students Social Media Addiction. They come from a vast amount of countries with enrolled students between the age of 18 to 24. It represents the struggles that a lot students face with social media and academic performance worldwide. For our project, we are going to create an R dashboard, we are going to have overall effects, students, gender, and countries as our pages. For the first page, we are going to implement some tables and graphs containing variables that relate to academic performance, mental health, sleep hours, and addiction score. The second page,we are going to look at how age relates to social media addiction. We are going to be doing something similar within the gender and countries pages.
+
+```{r}
+#| echo: false
+#| output: false 
+
+library(tidyverse)
+library(kableExtra)
+library(DT)
+library(gt)
+library(scales)
+library(readr)
+library(knitr)
+library(paletteer)
+library(shinythemes)
+```
+
+```{r}
+# Reading in the data 
+social <- read_csv("~/Desktop/Stat408/Final Proj/Final Project /Students Social Media Addiction.csv", show_col_types = FALSE)
+
+#Makes our data look a lot nicer and restricts it to the first five rows
+social_table = social[1:5, ]
+
+kable(social_table, format = "html") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+  
+#Creating levels and a factor function for my bar chart
+social <- social |>
+  mutate(
+    Academic_Level = factor(Academic_Level, 
+                            levels = c("High School", "Undergraduate", "Graduate")))
+
+
+```
+
+
+```{r}
+#Students
+
+#Creating levels and a factor function for my bar chart
+social <- social |>
+  mutate(
+    Academic_Level = factor(Academic_Level, 
+                            levels = c("High School", "Undergraduate", "Graduate")))
+
+#Most Used Platform per academic level
+social |>
+  ggplot(aes(x = Academic_Level, y = Avg_Daily_Usage_Hours, fill = Most_Used_Platform)) + 
+  geom_col(position = "fill")+ 
+  labs(
+    Title = "The Average Daily Usage amongst Academic Level Across the Most Used Platforms", 
+    x = "Academic Level", 
+    y = "Average Daily Usage (Hours)"
+  ) + 
+  scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray")
+
+#Creating a continuous bar chart 
+social |>
+  count(Academic_Level, Affects_Academic_Performance) |>
+  ggplot(aes(x = n, y = fct_rev(Academic_Level), 
+             fill = Affects_Academic_Performance)) + 
+  geom_col(position = "fill") +
+  scale_fill_manual(
+    values = c("#8074A8", "#C46487"), 
+    guide = guide_legend(reverse = TRUE)) + 
+  scale_x_continuous(labels = label_percent()) + 
+  labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
+
+#Creating a bar chart depicting how often the platforms are used amongst respondents
+social |>
+  count(Most_Used_Platform) |>
+  mutate(p = n / sum(n)) |>
+  ggplot(aes(x = reorder(Most_Used_Platform, n),
+             y = n, 
+             fill = Most_Used_Platform)) + 
+  geom_col() + 
+  scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray") + 
+  labs(x = "Platform", y = "Count") +
+  theme_minimal() + 
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+
+
+```{r}
+#Countries
+
+
+
+
+
+
+
+```
+
+
+
+```{r}
+#Overall effects
+
+#Average Sleep and Daily Usage by Mental Health Score 
+useage_summary = social |>
+  mutate(MH_cate = case_when(
+    Mental_Health_Score < 5 ~ "Low (0-4)", 
+    Mental_Health_Score < 8 ~ "Moderate (5-7)", 
+    Mental_Health_Score <= 10 ~ "High (8-10)"), 
+    MH_cate = factor(MH_cate,
+                     levels = c("Low (0-4)", 
+                                           "Moderate (5-7)", 
+                                           "High (8-10)"))) |>
+  group_by(MH_cate) |>
+  summarise(
+    avg_sleep = mean(Sleep_Hours_Per_Night, na.rm = TRUE), 
+    avg_usage = mean(Avg_Daily_Usage_Hours, na.rm = TRUE), 
+    n = n()) |>
+  pivot_longer(
+    cols = c(avg_sleep, avg_usage), 
+    names_to = "measure", 
+    values_to = "average") 
+
+ggplot(useage_summary, 
+       aes(x = MH_cate, y = average, fill = measure)) +
+  geom_col(position = position_dodge(width = 0.9), width = 0.8) +
+  labs(
+    title = "Average Sleep and Daily Usage by Mental Health Score", 
+    x = "Mental Health Score", 
+    y = "Average value (Hours)", 
+    fill = "Measure"
+  ) +  scale_fill_manual(
+    values = c("#8C9A6E", "#A8BFA3"))
+
+
+  
+```
+
+
+
+```{r}
+#Gender
+
+
+#Average Mental Health Score by Gender
+plot_mh = social |>
+  group_by(Gender) |>
+  summarise(avg_mh = mean(Mental_Health_Score, na.rm = TRUE))
+
+ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) + 
+  geom_col() + 
+  labs(title = "Average Mental Health Score by Gender",
+       x = "Gender",
+       y = "Average Mental Health Score") + 
+  scale_fill_manual(
+    values = c("#B173A0", "#C799BC"))
+
+
+#Conflicts over social media and gender 
+social |>
+  ggplot(aes(Avg_Daily_Usage_Hours, as.factor(Conflicts_Over_Social_Media), fill = Gender)) +
+  ggridges::geom_density_ridges(quantile_lines = TRUE, quantiles = 2, alpha = 0.7) + 
+  labs(
+    title = "Daily Usage and Conflicts over Social Media across Gender", 
+    x = "Average Daily Usage (Hours)", 
+    y = "Conflicts over Social Media", 
+    fill = "Gender"
+  ) +
+  scale_fill_manual(
+    values = c("Male" = "#E6A8A1", 
+               "Female" = "#A75D74"), 
+    guide = guide_legend(reverse = TRUE)) + 
+  theme_minimal() 
+
+
+
+  
+
+
+
+```
