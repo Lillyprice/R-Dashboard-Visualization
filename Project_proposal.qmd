@@ -149,6 +149,110 @@ social |>
 ```{r}
 #Countries
 
+assign_region <- function(country_vec) {
+ 
+  df <- tibble(Country = country_vec) |>
+    mutate(
+      Region = countrycode(Country, origin = "country.name", destination = "region"),
+      Continent = countrycode(Country, origin = "country.name", destination = "continent")
+    )
+  
+  # Warn about unmatched countries
+  unmatched <- df$Country[is.na(df$Region)]
+  if (length(unmatched) > 0) {
+    warning("Unmatched countries: ", paste(unique(unmatched), collapse = ", "))
+  }
+  
+  return(df)
+}
+
+region_df <- assign_region(social$Country)
+
+social <- social |>
+  left_join(region_df, by = "Country")
+```
+
+```{r}
+#Countries
+
+
+country_highlight <- c(
+  "Germany", "Australia", "USA", "UK", "Sri Lanka", "Russia", 
+   "Maldives", "Pakistan", "Iraq", "Ghana", "Finland", "Panama", "China", 
+  "Mexico", "Trinidad",  "Argentina", "Japan"
+)
+
+region_summary <- social |>
+  group_by(Region, Country) |>
+  summarize(
+    avg_sleep = mean(Sleep_Hours_Per_Night, na.rm = TRUE),
+    avg_daily_use = mean(Avg_Daily_Usage_Hours, na.rm = TRUE),
+    n = n(),
+    .groups = "drop"
+  )
+
+region_summary <- region_summary |>
+  mutate(
+    label = ifelse(Country %in% country_highlight, Country, "")
+  )
+
+
+Region_cols <- c(
+  "#F7A8B8",
+  "#EE8FC6",
+  "#E376D4",
+  "#CC63D9",
+  "#A955D4",  
+  "#843FBE",  
+  "#622A9A"
+)
+
+ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
+  geom_point(
+    aes(color = Region, fill = Region),
+    size = 2.5, alpha = 0.5,
+    shape = 21
+  ) +
+  geom_text_repel(
+    aes(label = label),
+    color = "black",
+    size = 9/.pt,
+    point.padding = 0.1, 
+    box.padding = 0.6,
+    min.segment.length = 0,
+    max.overlaps = 1000,
+    seed = 7654
+  ) +
+  scale_color_manual(values = darken(Region_cols, 0.3)) +
+  scale_fill_manual(values = Region_cols) +
+  scale_y_continuous(
+    name = "Average Nightly Hours Slept",
+    limits = c(4.5, 8.5),        # ← ZOOMED IN
+    breaks = seq(4.5, 8.5, 0.5)
+  ) +
+  scale_x_continuous(
+    name = "Daily Average of Hours Spent on Social Media",
+    limits = c(2, 6.5),          # ← ZOOMED IN
+    breaks = seq(2, 6.5, 0.5),
+    expand = c(0, 0)
+  ) +
+  guides(
+    color = guide_legend(
+      nrow = 1,
+      override.aes = list(
+        shape = rep(21, length(unique(region_summary$Region)))
+      )
+    )
+  ) +
+  theme_minimal_hgrid(12, rel_small = 1) +
+  theme(
+    legend.position = "top",
+    legend.justification = "right",
+    legend.text = element_text(size = 9),
+    legend.box.spacing = unit(0, "pt")
+  )
+
+
 
 
 
