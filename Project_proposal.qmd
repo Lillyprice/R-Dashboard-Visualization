@@ -26,6 +26,10 @@ library(readr)
 library(knitr)
 library(paletteer)
 library(shinythemes)
+library(countrycode)
+library(cowplot)
+library(colorspace)
+library(ggrepel)
 ```
 
 # Overall Effects
