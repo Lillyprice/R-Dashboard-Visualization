@@ -1,0 +1,146 @@
+---
+title: "STAT 408 Project Proposal"
+author: "Sierra Schall"
+date: today 
+format: html
+editor: visual
+---
+
+My project team is Lilly Price and Sierra Schall, and we are planning to work with Students Social Media Addiction. They come from a vast amount of countries with enrolled students between the age of 18 to 24. It represents the struggles that a lot students face with social media and academic performance worldwide. For our project, we are going to create an R dashboard, we are going to have overall effects, age, gender, and countries as our pages. For the first page, we are going to implement some tables and graphs containing variables that relate to academic performance, mental health, sleep hours, and addiction score. The second page,we are going to look at how age relates to social media addiction. We are going to be doing something similar within the gender and countries pages.
+
+```{r}
+#| echo: false
+#| output: false 
+
+library(tidyverse)
+library(kableExtra)
+library(DT)
+library(gt)
+library(scales)
+library(readr)
+library(knitr)
+library(paletteer)
+```
+
+```{r}
+# Reading in the data 
+social <- read_csv("~/Desktop/Stat408/Final Project /Students Social Media Addiction.csv", show_col_types = FALSE)
+
+#Makes our data look a lot nicer and restricts it to the first five rows
+social_table = social[1:5, ]
+
+kable(social_table, format = "html") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+  
+#Creating levels and a factor function for my bar chart
+social <- social |>
+  mutate(
+    Academic_Level = factor(Academic_Level, 
+                            levels = c("High School", "Undergraduate", "Graduate")))
+
+#Creating a continuous bar chart 
+social |>
+  count(Academic_Level, Affects_Academic_Performance) |>
+  ggplot(aes(x = n, y = fct_rev(Academic_Level), 
+             fill = Affects_Academic_Performance)) + 
+  geom_col(position = "fill") +
+  scale_fill_manual(
+    values = c("#8074A8", "#C46487"), 
+    guide = guide_legend(reverse = TRUE)) + 
+  scale_x_continuous(labels = label_percent()) + 
+  labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
+
+#Creating a bar chart depicting how often the platforms are used amongst respondents
+social |>
+  count(Most_Used_Platform) |>
+  mutate(p = n / sum(n)) |>
+  ggplot(aes(x = reorder(Most_Used_Platform, n),
+             y = n, 
+             fill = Most_Used_Platform)) + 
+  geom_col() + 
+  scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray") + 
+  labs(x = "Platform", y = "Count") +
+  theme_minimal() + 
+  theme(legend.position = "none", 
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+```{r}
+#Students
+
+#Creating levels and a factor function for my bar chart
+social <- social |>
+  mutate(
+    Academic_Level = factor(Academic_Level, 
+                            levels = c("High School", "Undergraduate", "Graduate")))
+
+#Creating a continuous bar chart 
+social |>
+  count(Academic_Level, Affects_Academic_Performance) |>
+  ggplot(aes(x = n, y = fct_rev(Academic_Level), 
+             fill = Affects_Academic_Performance)) + 
+  geom_col(position = "fill") +
+  scale_fill_manual(
+    values = c("#8074A8", "#C46487"), 
+    guide = guide_legend(reverse = TRUE)) + 
+  scale_x_continuous(labels = label_percent()) + 
+  labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
+
+#Addiction score vs performane 
+
+
+
+```
+
+```{r}
+#Countries
+
+
+
+
+
+
+```
+
+```{r}
+#Overall effects
+
+#Average Sleep and Daily Usage by Mental Health Score 
+useage_summary = social |>
+  mutate(MH_cate = case_when(
+    Mental_Health_Score < 5 ~ "Low (0-4)", 
+    Mental_Health_Score < 8 ~ "Moderate (5-7)", 
+    Mental_Health_Score <= 10 ~ "High (8-10)")) |>
+  group_by(MH_cate) |>
+  summarise(
+    avg_sleep = mean(Sleep_Hours_Per_Night, na.rm = TRUE), 
+    avg_usage = mean(Avg_Daily_Usage_Hours, na.rm = TRUE), 
+    n = n()) |>
+  pivot_longer(
+    cols = c(avg_sleep, avg_usage), 
+    names_to = "measure", 
+    values_to = "average")
+
+ggplot(useage_summary, 
+       aes(x = MH_cate, y = average, fill = measure)) +
+  geom_col(position = position_dodge(width = 0.9), width = 0.8) +
+  labs(
+    title = "Average Sleep and Daily Usage by Mental Health Score", 
+    x = "Mental Health Score", 
+    y = "Average value (Hours)", 
+    fill = "measure"
+  ) + 
+  scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray")
+  
+```
+
+```{r}
+# Age 
+
+
+
+
+
+
+```
