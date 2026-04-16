@@ -1,17 +1,19 @@
 ---
 title: "STAT 408 Project Proposal"
-author: "Sierra Schall"
+author: "Sierra Schall and Lillian Price"
 date: "today"
+
 format:
   dashboard:
     nav-buttons: [github]
     github: https://github.com/Lillyprice/R-Dashboard-Visualization
-    theme: 
+    theme:
       - sandstone
       - theme/custom.color
     orientation: rows
     scrolling: true
-    embed-resources: true   
+    embed-resources: true
+
 editor_options:
   chunk_output_type: console
 --- 
@@ -34,29 +36,6 @@ library(cowplot)
 library(colorspace)
 library(ggrepel)
 ```
-
-#  {.sidebar}
-
-This dashboard displays statistics for:
-
-|              |                     |
-|--------------|---------------------|
-| **Hospital** | Grey Sloan Memorial |
-| **Unit**     | Labor and Delivery  |
-| **Month**    | `{r} time_period`   |
-
-------------------------------------------------------------------------
-
-In `{r} time_period` the staff breakdown in the unit was as follows:
-
-|                          |     |
-|--------------------------|-----|
-| **Attending physicians** |  14 |
-| **Residents**            |  21 |
-| **Nurses**               |  12 |
-
-------------------------------------------------------------------------
-
 
 # Overall Effects
 
