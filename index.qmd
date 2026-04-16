@@ -1,15 +1,18 @@
 ---
 title: "STAT 408 Project Proposal"
 author: "Sierra Schall"
-date: today 
-format: html
+date: "today"
+format:
   dashboard:
     nav-buttons: [github]
-    github: https://github.com/Lillyprice/R-Dashboard-Visualization.git
-    theme: [sandstone, theme/custom.color]
+    github: https://github.com/Lillyprice/R-Dashboard-Visualization
+    theme: 
+      - sandstone
+      - theme/custom.color
     orientation: rows
     scrolling: true
-editor_options: 
+    embed-resources: true   
+editor_options:
   chunk_output_type: console
 --- 
 
