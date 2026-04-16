@@ -1,6 +1,6 @@
 ---
 title: "STAT 408 Project Proposal"
-author: "Sierra Schall and Lilly Price"
+author: "Sierra Schall"
 date: today 
 format: 
   dashboard:
