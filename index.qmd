@@ -50,7 +50,7 @@ Student Social Media Addiction Analysis Dataset is from survey-based information
 
 ```{r}
 # Reading in the data 
-social <- read_csv("~/Desktop/Stat408/Final Proj/Students Social Media Addiction.csv", show_col_types = FALSE)
+social <- read_csv("C:/Users/lilly/GitRepo/Students Social Media Addiction.csv", show_col_types = FALSE)
 
 #Makes our data look a lot nicer and restricts it to the first five rows
 social_table = social[1:5, ]
