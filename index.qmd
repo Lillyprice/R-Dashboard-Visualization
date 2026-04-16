@@ -1,15 +1,21 @@
 ---
-title: "STAT 408 Project Proposal"
-author: "Sierra Schall"
-date: today 
-format: 
+title: "Social Media Addiction Amongst Students Dashboard"
+author: "Sierra Schall and Lillian Price"
+date: "today"
+
+format:
+>>>>>>> 1bfdf92a8d9d8952465195e49e131a6cb22f5f02
   dashboard:
     nav-buttons: [github]
-    github: https://github.com/Lillyprice/R-Dashboard-Visualization.git
-    theme: [sandstone, theme/custom.color]
+    github: https://github.com/Lillyprice/R-Dashboard-Visualization
+    theme:
+      - sandstone
+      - theme/custom.color
     orientation: rows
     scrolling: true
-editor_options: 
+    embed-resources: true
+
+editor_options:
   chunk_output_type: console
 --- 
 
@@ -32,11 +38,14 @@ library(colorspace)
 library(ggrepel)
 ```
 
+<<<<<<< HEAD
 #  {.sidebar}
 
 This dashboard displays statistics for:
 
 
+=======
+>>>>>>> 1bfdf92a8d9d8952465195e49e131a6cb22f5f02
 # Overall Effects
 
 Student Social Media Addiction Analysis Dataset is from survey-based information about social media usage habits and addiction levels among students. Each row is an individual student's reponse. It covers over 110 countries and different academic levels (high school, undergraduate, and graduate). This dataset includes demographic variables such as age, gender and relationship status, and also behavior aspects such as the average amount of sleep in hours a night, most used social media platform, and average daily use. This records the impact social media can have on sleep and if the social media usage effects them academically. This could indicate heighten feeling of anxiety, stress, and emotional dependency when not using social media. Zahra Nusrat (the owner of this particular dataset) wrote, "this dataset was collected to better understand the extent of social media dependency among students and to identify patterns that may contribute to unhealthy usage behavior". This could be useful for students, teachers, and other professionals alike to better understand the effects of social media amongst students world wide and promote healthier social media habits. 
