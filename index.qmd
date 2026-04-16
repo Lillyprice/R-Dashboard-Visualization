@@ -1,8 +1,8 @@
 ---
 title: "STAT 408 Project Proposal"
-author: "Sierra Schall"
+author: "Sierra Schall and Lilly Price"
 date: today 
-format: html
+format: 
   dashboard:
     nav-buttons: [github]
     github: https://github.com/Lillyprice/R-Dashboard-Visualization.git
@@ -36,24 +36,6 @@ library(ggrepel)
 
 This dashboard displays statistics for:
 
-|              |                     |
-|--------------|---------------------|
-| **Hospital** | Grey Sloan Memorial |
-| **Unit**     | Labor and Delivery  |
-| **Month**    | `{r} time_period`   |
-
-------------------------------------------------------------------------
-
-In `{r} time_period` the staff breakdown in the unit was as follows:
-
-|                          |     |
-|--------------------------|-----|
-| **Attending physicians** |  14 |
-| **Residents**            |  21 |
-| **Nurses**               |  12 |
-
-------------------------------------------------------------------------
-
 
 # Overall Effects
 
@@ -62,7 +44,7 @@ Student Social Media Addiction Analysis Dataset is from survey-based information
 
 ```{r}
 # Reading in the data 
-social <- read_csv("~/STAT 408/STAT 408/Final Proj/Students Social Media Addiction.csv", show_col_types = FALSE)
+social <- read_csv("~/Desktop/Stat408/Final Proj/Students Social Media Addiction.csv", show_col_types = FALSE)
 
 #Makes our data look a lot nicer and restricts it to the first five rows
 social_table = social[1:5, ]
@@ -172,6 +154,17 @@ social |>
 
 
 # Countries 
+
+## Row {height = "20%"}
+
+```{r}
+#| content: valuebox
+#| title: "Total Countries"
+
+length(unique(social$Country))
+
+```
+
 
 ```{r}
 #Countries
