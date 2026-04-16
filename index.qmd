@@ -4,7 +4,6 @@ author: "Sierra Schall and Lillian Price"
 date: "today"
 
 format:
->>>>>>> 1bfdf92a8d9d8952465195e49e131a6cb22f5f02
   dashboard:
     nav-buttons: [github]
     github: https://github.com/Lillyprice/R-Dashboard-Visualization
