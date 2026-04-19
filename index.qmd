@@ -18,7 +18,9 @@ editor_options:
 
 ```{r}
 #| echo: false
-#| output: false 
+#| output: false
+#| warning: false
+#| message: false
 
 library(tidyverse)
 library(kableExtra)
@@ -41,6 +43,8 @@ library(ggrepel)
 This dashboard displays statistics for:
 
 
+
+
 # Overall Effects
 
 Student Social Media Addiction Analysis Dataset is from survey-based information about social media usage habits and addiction levels among students. Each row is an individual student's reponse. It covers over 110 countries and different academic levels (high school, undergraduate, and graduate). This dataset includes demographic variables such as age, gender and relationship status, and also behavior aspects such as the average amount of sleep in hours a night, most used social media platform, and average daily use. This records the impact social media can have on sleep and if the social media usage effects them academically. This could indicate heighten feeling of anxiety, stress, and emotional dependency when not using social media. Zahra Nusrat (the owner of this particular dataset) wrote, "this dataset was collected to better understand the extent of social media dependency among students and to identify patterns that may contribute to unhealthy usage behavior". This could be useful for students, teachers, and other professionals alike to better understand the effects of social media amongst students world wide and promote healthier social media habits. 
@@ -48,7 +52,7 @@ Student Social Media Addiction Analysis Dataset is from survey-based information
 
 ```{r}
 # Reading in the data 
-social <- read_csv("C:/Users/lilly/GitRepo/Students Social Media Addiction.csv", show_col_types = FALSE)
+social <- read_csv("~/Desktop/Stat408/R-Dashboard-Visualization/Students Social Media Addiction.csv", show_col_types = FALSE)
 
 #Makes our data look a lot nicer and restricts it to the first five rows
 social_table = social[1:5, ]
@@ -165,7 +169,11 @@ social |>
 #| content: valuebox
 #| title: "Total Countries"
 
-length(unique(social$Country))
+value_box(
+  title = "Total Countries", 
+  color = "F7A8B8", 
+  value = length(unique(social$Country)
+)
 
 ```
 
