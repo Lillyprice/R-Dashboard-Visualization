@@ -58,7 +58,7 @@ social <- read_csv("~/Desktop/Stat408/R-Dashboard-Visualization/Students Social 
 #| title: Total Observations
 
 list(
-  color = "primary", 
+  color = "danger", 
   value = max(social$Student_ID)
 )
 ```
@@ -68,7 +68,7 @@ list(
 #| title: Mean Mental Health Score 
 
 list(
-  color = "success", 
+  color = "warning", 
   value = mean(social$Mental_Health_Score)
 )
 ```
@@ -78,11 +78,12 @@ list(
 #| title: Mean Addiction Score
 
 list(
-  color = "primary", 
+  color = "danger", 
   value = mean(social$Addicted_Score)
 )
 ```
 
+### Column {width="40%"}
 
 ```{r}
 #Makes our data look a lot nicer and restricts it to the first five rows
@@ -100,6 +101,7 @@ social <- social |>
 
 ```
 
+### Column {width="60%"}
 
 ```{r}
 #Overall effects
@@ -142,6 +144,8 @@ ggplot(useage_summary,
 
 # Students
 
+### Column {width="30%"}
+
 ```{r}
 #Students
 
@@ -162,6 +166,12 @@ social |>
   ) + 
   scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray")
 
+
+```
+
+### Column {width="30%"}
+
+```{r}
 #Creating a continuous bar chart 
 social |>
   count(Academic_Level, Affects_Academic_Performance) |>
@@ -173,6 +183,11 @@ social |>
     guide = guide_legend(reverse = TRUE)) + 
   scale_x_continuous(labels = label_percent()) + 
   labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
+```
+
+### Column {width="30%"}
+
+```{r}
 
 #Creating a bar chart depicting how often the platforms are used amongst respondents
 social |>
@@ -228,7 +243,8 @@ social <- social |>
 #| title: Total Countries
 
 list(
-  color = "primary", 
+  icon = "globe", 
+  color = "danger", 
   value = length(unique(social$Country))
 )
 ```
@@ -238,7 +254,8 @@ list(
 #| title: Total Regions
 
 list(
-  color = "success", 
+  icon = "compass",
+  color = "info", 
   value = length(unique(region_df$Region))
 )
 ```
