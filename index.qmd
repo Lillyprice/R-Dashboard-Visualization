@@ -68,7 +68,7 @@ list(
 #| title: Mean Mental Health Score 
 
 list(
-  color = "primary", 
+  color = "success", 
   value = mean(social$Mental_Health_Score)
 )
 ```
