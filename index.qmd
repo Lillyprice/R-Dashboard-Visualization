@@ -63,6 +63,26 @@ list(
 )
 ```
 
+```{r}
+#| content: valuebox
+#| title: Mean Mental Health Score 
+
+list(
+  color = "primary", 
+  value = mean(social$Mental_Health_Score)
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: Mean Addiction Score
+
+list(
+  color = "primary", 
+  value = mean(social$Addicted_Score)
+)
+```
+
 
 ```{r}
 #Makes our data look a lot nicer and restricts it to the first five rows
