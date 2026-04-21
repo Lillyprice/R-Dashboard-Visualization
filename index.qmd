@@ -83,26 +83,9 @@ list(
 )
 ```
 
+## Row {height="40%"}
+
 ### Column {width="40%"}
-
-```{r}
-#Makes our data look a lot nicer and restricts it to the first five rows
-social_table = social[1:5, ]
-
-kable(social_table, format = "html") |>
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
-  
-#Creating levels and a factor function for my bar chart
-social <- social |>
-  mutate(
-    Academic_Level = factor(Academic_Level, 
-                            levels = c("High School", "Undergraduate", "Graduate")))
-
-
-```
-
-
-### Column {width="30%"}
 
 ```{r}
 #making a line graph of the total amount of students per age group
@@ -122,8 +105,7 @@ social |>
 
 ```
 
-
-### Column {width="60%"}
+### Column {width="30%"}
 
 ```{r}
 #Overall effects
@@ -162,6 +144,25 @@ ggplot(useage_summary,
 
   
 ```
+
+## Row {height="40%"}
+
+```{r}
+#Makes our data look a lot nicer and restricts it to the first five rows
+social_table = social[1:5, ]
+
+kable(social_table, format = "html") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+  
+#Creating levels and a factor function for my bar chart
+social <- social |>
+  mutate(
+    Academic_Level = factor(Academic_Level, 
+                            levels = c("High School", "Undergraduate", "Graduate")))
+
+
+```
+
 
 
 # Students
