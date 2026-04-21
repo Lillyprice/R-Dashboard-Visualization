@@ -102,6 +102,8 @@ social <- social |>
 ```
 
 
+### Column {width="30%"}
+
 ```{r}
 #making a line graph of the total amount of students per age group
 social |>
