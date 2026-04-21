@@ -101,6 +101,26 @@ social <- social |>
 
 ```
 
+
+```{r}
+#making a line graph of the total amount of students per age group
+social |>
+  count(Age) |>
+  mutate( p = n/sum(n)) |>
+  ggplot(aes(x = Age, y = n, group = 1)) +
+  geom_line(linewidth = 2, color = "#F7A8B8") + 
+  geom_point(size = 3, color = "#EE8FC6") + 
+  geom_point(size = 6, color = "#F7A8B8", shape = "circle open") +
+  labs(
+    title = "Total Amount of Students per Age Group", 
+    x = "Age Group", 
+    y = "Amount"
+  )
+
+
+```
+
+
 ### Column {width="60%"}
 
 ```{r}
@@ -140,26 +160,6 @@ ggplot(useage_summary,
 
   
 ```
-
-
-```{r}
-#making a line graph of the total amount of students per age group
-social |>
-  count(Age) |>
-  mutate( p = n/sum(n)) |>
-  ggplot(aes(x = Age, y = n, group = 1)) +
-  geom_line(linewidth = 2, color = "#F7A8B8") + 
-  geom_point(size = 3, color = "#EE8FC6") + 
-  geom_point(size = 6, color = "#F7A8B8", shape = "circle open") +
-  labs(
-    title = "Total Amount of Students per Age Group", 
-    x = "Age Group", 
-    y = "Amount"
-  )
-
-
-```
-
 
 
 # Students
