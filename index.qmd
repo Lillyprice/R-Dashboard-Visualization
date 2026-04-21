@@ -37,7 +37,7 @@ library(colorspace)
 library(ggrepel)
 ```
 
-<<<<<<< HEAD
+
 #  {.sidebar}
 
 This dashboard displays statistics for:
