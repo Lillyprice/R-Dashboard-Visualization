@@ -254,7 +254,7 @@ assign_region <- function(country_vec) {
 region_df <- assign_region(social$Country)
 
 social <- social |>
-  left_join(region_df, by = "Country")
+  left_join(region_df, by = "Country", relationship = "many-to-many")
 ```
 
 
