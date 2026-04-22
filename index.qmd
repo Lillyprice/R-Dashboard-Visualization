@@ -2,7 +2,6 @@
 title: "Social Media Addiction Amongst Students Dashboard"
 author: "Sierra Schall and Lillian Price"
 date: "today"
-
 format:
   dashboard:
     nav-buttons: [github]
@@ -13,14 +12,15 @@ format:
     orientation: rows
     scrolling: true
     embed-resources: true
-
 editor_options:
   chunk_output_type: console
 --- 
 
 ```{r}
 #| echo: false
-#| output: false 
+#| output: false
+#| warning: false
+#| message: false
 
 library(tidyverse)
 library(kableExtra)
@@ -35,38 +35,77 @@ library(countrycode)
 library(cowplot)
 library(colorspace)
 library(ggrepel)
+library(bslib)
 ```
 
 
 #  {.sidebar}
 
-This dashboard displays statistics for:
+Student Social Media Addiction Analysis Dataset is from survey-based information about social media usage habits and addiction levels among students. Each row is an individual student's response. It covers over 110 countries and different academic levels (high school, undergraduate, and graduate). This dataset includes demographic variables such as age, gender and relationship status, and also behavior aspects such as the average amount of sleep in hours a night, most used social media platform, and average daily use. This records the impact social media can have on sleep and if the social media usage effects them academically. This could indicate heighten feeling of anxiety, stress, and emotional dependency when not using social media. Zahra Nusrat (the owner of this particular dataset) wrote, "this dataset was collected to better understand the extent of social media dependency among students and to identify patterns that may contribute to unhealthy usage behavior". This could be useful for students, teachers, and other professionals alike to better understand the effects of social media amongst students world wide and promote healthier social media habits. 
 
 
 # Overall Effects
 
-Student Social Media Addiction Analysis Dataset is from survey-based information about social media usage habits and addiction levels among students. Each row is an individual student's reponse. It covers over 110 countries and different academic levels (high school, undergraduate, and graduate). This dataset includes demographic variables such as age, gender and relationship status, and also behavior aspects such as the average amount of sleep in hours a night, most used social media platform, and average daily use. This records the impact social media can have on sleep and if the social media usage effects them academically. This could indicate heighten feeling of anxiety, stress, and emotional dependency when not using social media. Zahra Nusrat (the owner of this particular dataset) wrote, "this dataset was collected to better understand the extent of social media dependency among students and to identify patterns that may contribute to unhealthy usage behavior". This could be useful for students, teachers, and other professionals alike to better understand the effects of social media amongst students world wide and promote healthier social media habits. 
-
-
 ```{r}
 # Reading in the data 
-social <- read_csv("C:/Users/lilly/GitRepo/Students Social Media Addiction.csv", show_col_types = FALSE)
+social <- read_csv("~/Desktop/Stat408/R-Dashboard-Visualization/Students Social Media Addiction.csv", show_col_types = FALSE)
+```
 
-#Makes our data look a lot nicer and restricts it to the first five rows
-social_table = social[1:5, ]
+## Row {height = "20%"}
 
-kable(social_table, format = "html") |>
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
-  
-#Creating levels and a factor function for my bar chart
-social <- social |>
-  mutate(
-    Academic_Level = factor(Academic_Level, 
-                            levels = c("High School", "Undergraduate", "Graduate")))
+```{r}
+#| content: valuebox
+#| title: Total Observations
+
+list(
+  color = "danger", 
+  value = max(social$Student_ID)
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: Mean Mental Health Score 
+
+list(
+  color = "warning", 
+  value = mean(social$Mental_Health_Score)
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: Mean Addiction Score
+
+list(
+  color = "danger", 
+  value = mean(social$Addicted_Score)
+)
+```
+
+## Row {height="40%"}
+
+### Column {width="40%"}
+
+```{r}
+#making a line graph of the total amount of students per age group
+social |>
+  count(Age) |>
+  mutate( p = n/sum(n)) |>
+  ggplot(aes(x = Age, y = n, group = 1)) +
+  geom_line(linewidth = 2, color = "#F7A8B8") + 
+  geom_point(size = 3, color = "#EE8FC6") + 
+  geom_point(size = 6, color = "#F7A8B8", shape = "circle open") +
+  labs(
+    title = "Total Amount of Students per Age Group", 
+    x = "Age Group", 
+    y = "Amount"
+  )
 
 
 ```
 
+### Column {width="30%"}
 
 ```{r}
 #Overall effects
@@ -106,8 +145,29 @@ ggplot(useage_summary,
   
 ```
 
+## Row {height="40%"}
+
+```{r}
+#Makes our data look a lot nicer and restricts it to the first five rows
+social_table = social[1:5, ]
+
+kable(social_table, format = "html") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+  
+#Creating levels and a factor function for my bar chart
+social <- social |>
+  mutate(
+    Academic_Level = factor(Academic_Level, 
+                            levels = c("High School", "Undergraduate", "Graduate")))
+
+
+```
+
+
 
 # Students
+
+### Column {width="30%"}
 
 ```{r}
 #Students
@@ -129,6 +189,12 @@ social |>
   ) + 
   scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray")
 
+
+```
+
+### Column {width="30%"}
+
+```{r}
 #Creating a continuous bar chart 
 social |>
   count(Academic_Level, Affects_Academic_Performance) |>
@@ -140,6 +206,11 @@ social |>
     guide = guide_legend(reverse = TRUE)) + 
   scale_x_continuous(labels = label_percent()) + 
   labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
+```
+
+### Column {width="30%"}
+
+```{r}
 
 #Creating a bar chart depicting how often the platforms are used amongst respondents
 social |>
@@ -164,15 +235,6 @@ social |>
 ## Row {height = "20%"}
 
 ```{r}
-#| content: valuebox
-#| title: "Total Countries"
-
-length(unique(social$Country))
-
-```
-
-
-```{r}
 #Countries
 
 assign_region <- function(country_vec) {
@@ -195,8 +257,32 @@ assign_region <- function(country_vec) {
 region_df <- assign_region(social$Country)
 
 social <- social |>
-  left_join(region_df, by = "Country")
+  left_join(region_df, by = "Country", relationship = "many-to-many")
 ```
+
+
+```{r}
+#| content: valuebox
+#| title: Total Countries
+
+list(
+  icon = "globe", 
+  color = "danger", 
+  value = length(unique(social$Country))
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: Total Regions
+
+list(
+  icon = "compass",
+  color = "info", 
+  value = length(unique(region_df$Region))
+)
+```
+
 
 ```{r}
 #Countries
@@ -277,16 +363,7 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
     legend.text = element_text(size = 9),
     legend.box.spacing = unit(0, "pt")
   )
-
-
-
-
-
-
-
-
 ```
-
 
 
 # Gender
