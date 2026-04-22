@@ -158,7 +158,7 @@ ggplot(useage_summary,
   geom_col(position = position_dodge(width = 0.9), width = 0.8) +
   labs(
     x = "Mental Health Score", 
-    y = "Average value (Hours)", 
+    y = "Average Value (Hours)", 
     fill = "Measure"
   ) +  scale_fill_manual(
     values = c("#8C9A6E", "#A8BFA3"))
