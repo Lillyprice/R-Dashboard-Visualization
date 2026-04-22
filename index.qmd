@@ -283,6 +283,9 @@ list(
 )
 ```
 
+## Row {height="40%"}
+
+### Column {width="40%"}
 
 ```{r}
 #Countries
