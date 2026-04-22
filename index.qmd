@@ -493,9 +493,8 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
     values = c("#B173A0", "#C799BC"))
 ```
 
-
 ```{r}
-#| title: "Daily Usage and Conflicts over Social Media across Gender", 
+#| title: "Daily Usage and Conflicts over Social Media across Gender"
 
 #Conflicts over social media and gender 
 social |>
@@ -510,5 +509,6 @@ social |>
     values = c("Male" = "#E6A8A1", 
                "Female" = "#A75D74"), 
     guide = guide_legend(reverse = TRUE)) + 
-  theme_minimal() 
+  theme_minimal()
 ```
+
