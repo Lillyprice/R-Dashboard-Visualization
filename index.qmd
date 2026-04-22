@@ -368,6 +368,81 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
   )
 ```
 
+### Column {width="30%"}
+
+```{r}
+#Table of the proportion of students per country
+reg_social = left_join(social, region_summary)
+
+
+reg_social |>
+  group_by(Region) |>
+  summarise(n = n_distinct(Student_ID)) |>
+  mutate(p = n / sum(n)) |>
+  gt() |>
+  fmt_percent(
+    columns = p, 
+    decimals = 1
+  ) |> 
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "East Asia & Pacific"
+    )
+  ) |>   
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "Europe & Central Asia"
+    )
+  ) |>    
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "Latin America & Caribbean"
+    )
+  ) |>    
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "Middle East & North Africa"
+    )
+  ) |>    
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "North America"
+    )
+  ) |>    
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "South Asia"
+    )
+  ) |>    
+  tab_style(
+    style = cell_text(color = "#C46487", weight = "bold"),
+    locations = cells_body(
+      columns = everything(),
+      rows = Region == "Sub-Saharan Africa"
+    )
+  ) |> 
+  cols_label(
+    Region = "",
+    n = "<span style='color:#B173A0'><b>Number of Students</b></span>", 
+    p = "<span style='color:#B173A0'><b>Proportion of Students</b></span>", 
+    .fn = md
+  )
+  
+  
+```
+
 
 # Gender
 
