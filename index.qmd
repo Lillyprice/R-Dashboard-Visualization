@@ -107,7 +107,7 @@ list(
 
 ```{r}
 #| title: Amount of Students per Age Group
-#| #making a line graph of the total amount of students per age group
+ #making a line graph of the total amount of students per age group
 social |>
   count(Age) |>
   mutate( p = n/sum(n)) |>
