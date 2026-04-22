@@ -36,6 +36,7 @@ library(cowplot)
 library(colorspace)
 library(ggrepel)
 library(bslib)
+library(here)
 ```
 
 
@@ -55,7 +56,8 @@ library(bslib)
 
 ```{r}
 # Reading in the data 
-social <- read_csv("Students Social Media Addiction.csv", show_col_types = FALSE)
+social <- read_csv(here("Students Social Media Addiction.csv"), show_col_types = FALSE)
+
 social <- social |>
   group_by(Student_ID) |>
   slice(1) |>
