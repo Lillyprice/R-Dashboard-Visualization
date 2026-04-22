@@ -278,7 +278,7 @@ list(
 
 list(
   icon = "compass",
-  color = "info", 
+  color = "warning", 
   value = length(unique(region_df$Region))
 )
 ```
