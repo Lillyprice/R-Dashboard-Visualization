@@ -58,6 +58,7 @@ library(here)
 # Reading in the data 
 social <- read_csv(here("Students Social Media Addiction.csv"), show_col_types = FALSE)
 
+# Takes one obs per student ID
 social <- social |>
   group_by(Student_ID) |>
   slice(1) |>
@@ -74,6 +75,7 @@ social <- social |>
 #| content: valuebox
 #| title: Total Observations
 
+# Valuebox
 list(
   icon  = "people-fill",
   color = "danger", 
@@ -85,6 +87,7 @@ list(
 #| content: valuebox
 #| title: Mean Mental Health Score 
 
+# Valuebox 
 list(
   icon  = "heart-pulse-fill",
   color = "warning", 
@@ -96,6 +99,7 @@ list(
 #| content: valuebox
 #| title: Mean Addiction Score
 
+# Valuebox
 list(
   icon  = "exclamation-triangle-fill",
   color = "danger", 
@@ -109,7 +113,8 @@ list(
 
 ```{r}
 #| title: Amount of Students per Age Group
- #making a line graph of the total amount of students per age group
+
+# Making a line graph of the total amount of students per age group
 social |>
   count(Age) |>
   mutate( p = n/sum(n)) |>
@@ -121,15 +126,14 @@ social |>
     x = "Age Group", 
     y = "Amount"
   )
-
-
 ```
 
 ### Column {width="30%"}
 
 ```{r}
 #| title: Average Sleep and Daily Usage by Mental Health Score
-#Average Sleep and Daily Usage by Mental Health Score 
+
+# Average Sleep and Daily Usage by Mental Health Score 
 useage_summary = social |>
   mutate(MH_cate = case_when(
     Mental_Health_Score < 5 ~ "Low (0-4)", 
@@ -158,9 +162,6 @@ ggplot(useage_summary,
     fill = "Measure"
   ) +  scale_fill_manual(
     values = c("#8C9A6E", "#A8BFA3"))
-
-
-  
 ```
 
 ## Row {height="40%"}
@@ -168,19 +169,17 @@ ggplot(useage_summary,
 ```{r}
 #| title: Table of Raw Data
 
-#Makes our data look a lot nicer and restricts it to the first five rows
+# Makes our data look a lot nicer and restricts it to the first five rows
 social_table = social[1:5, ]
 
 kable(social_table, format = "html") |>
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
   
-#Creating levels and a factor function for my bar chart
+# Creating levels and a factor function for my bar chart
 social <- social |>
   mutate(
     Academic_Level = factor(Academic_Level, 
                             levels = c("High School", "Undergraduate", "Graduate")))
-
-
 ```
 
 
@@ -192,15 +191,11 @@ social <- social |>
 ### Column {width="50%"}
 
 ```{r}
-#Students
-
-#Creating levels and a factor function for my bar chart
+# Creating levels and a factor function for my bar chart
 social <- social |>
   mutate(
     Academic_Level = factor(Academic_Level, 
                             levels = c("High School", "Undergraduate", "Graduate")))
-
-
 ```
 
 ### Column {width="50%"}
@@ -208,9 +203,11 @@ social <- social |>
 ```{r}
 #| title: Most Used Platfrom by Academic Level
 
-#Most Used Platform per academic level
+# Most Used Platform per academic level
 social |>
-  ggplot(aes(x = Academic_Level, y = Avg_Daily_Usage_Hours, fill = Most_Used_Platform)) + 
+  ggplot(aes(x = Academic_Level, 
+             y = Avg_Daily_Usage_Hours, 
+             fill = Most_Used_Platform)) + 
   geom_col(position = "fill")+ 
   labs(
     Title = "The Average Daily Usage amongst Academic Level Across the Most Used Platforms", 
@@ -226,7 +223,8 @@ social |>
 
 ```{r}
 #| title: Affect of Social Media Use on Academic Performance by Grade Level
-#Creating a continuous bar chart 
+
+# Creating a continuous bar chart 
 social |>
   count(Academic_Level, Affects_Academic_Performance) |>
   ggplot(aes(x = n, y = fct_rev(Academic_Level), 
@@ -244,8 +242,7 @@ social |>
 ```{r}
 #| title: How Often The Platforms are Used Amongst Respondents
 
-
-#Creating a bar chart depicting how often the platforms are used amongst respondents
+# Creating a bar chart depicting how often the platforms are used amongst respondents
 social |>
   count(Most_Used_Platform) |>
   mutate(p = n / sum(n)) |>
@@ -258,8 +255,6 @@ social |>
   theme_minimal() + 
   theme(legend.position = "none", 
         axis.text.x = element_text(angle = 45, hjust = 1))
-
-
 ```
 
 
@@ -268,20 +263,24 @@ social |>
 ## Row {height = "20%"}
 
 ```{r}
-#Countries
+# Countries
 
 assign_region <- function(country_vec) {
  
   df <- tibble(Country = country_vec) |>
     mutate(
-      Region = countrycode(Country, origin = "country.name", destination = "region"),
-      Continent = countrycode(Country, origin = "country.name", destination = "continent")
+      Region = countrycode(Country, 
+                           origin = "country.name", destination = "region"),
+      Continent = countrycode(Country, 
+                              origin = "country.name", destination = "continent")
     )
   
   # Warn about unmatched countries
   unmatched <- df$Country[is.na(df$Region)]
   if (length(unmatched) > 0) {
-    warning("Unmatched countries: ", paste(unique(unmatched), collapse = ", "))
+    warning("Unmatched countries: ",
+            paste(unique(unmatched), 
+                  collapse = ", "))
   }
   
   return(df)
@@ -290,7 +289,9 @@ assign_region <- function(country_vec) {
 region_df <- assign_region(social$Country)
 
 social <- social |>
-  left_join(region_df, by = "Country", relationship = "many-to-many")
+  left_join(region_df, 
+            by = "Country", 
+            relationship = "many-to-many")
 ```
 
 
@@ -298,6 +299,7 @@ social <- social |>
 #| content: valuebox
 #| title: Total Countries
 
+# Valuebox
 list(
   icon = "globe", 
   color = "danger", 
@@ -309,6 +311,7 @@ list(
 #| content: valuebox
 #| title: Total Regions
 
+# Valuebox
 list(
   icon = "compass",
   color = "warning", 
@@ -322,13 +325,15 @@ list(
 
 ```{r}
 #| title: Hours Slept vs Hours Spent on Social Media by Country 
-
+ 
+# Highlights the countries 
 country_highlight <- c(
   "Germany", "Australia", "USA", "UK", "Sri Lanka", "Russia", 
    "Maldives", "Pakistan", "Iraq", "Ghana", "Finland", "Panama", "China", 
   "Mexico", "Trinidad",  "Argentina", "Japan"
 )
 
+# Creates a new dataframe summarizing aspects in the regions 
 region_summary <- social |>
   group_by(Region, Country) |>
   summarize(
@@ -343,7 +348,7 @@ region_summary <- region_summary |>
     label = ifelse(Country %in% country_highlight, Country, "")
   )
 
-
+# Colors
 Region_cols <- c(
   "#F7A8B8",
   "#EE8FC6",
@@ -354,6 +359,7 @@ Region_cols <- c(
   "#622A9A"
 )
 
+# Plotting the region summary
 ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
   geom_point(
     aes(color = Region, fill = Region),
@@ -403,10 +409,10 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
 ### Column {width="30%"}
 
 ```{r}
-#Table of the proportion of students per country
+# New dataframe combining two dataframes 
 reg_social = left_join(social, region_summary)
 
-
+# Table of the proportion of students per country
 reg_social |>
   group_by(Region) |>
   summarise(n = n_distinct(Student_ID)) |>
@@ -481,7 +487,7 @@ reg_social |>
 ```{r}
 #| title: Average Mental Health Score by Gender
 
-#Average Mental Health Score by Gender
+# Average Mental Health Score by Gender
 plot_mh = social |>
   group_by(Gender) |>
   summarise(avg_mh = mean(Mental_Health_Score, na.rm = TRUE))
@@ -498,10 +504,14 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
 ```{r}
 #| title: "Daily Usage and Conflicts over Social Media across Gender"
 
-#Conflicts over social media and gender 
+# Conflicts over social media and gender 
 social |>
-  ggplot(aes(Avg_Daily_Usage_Hours, as.factor(Conflicts_Over_Social_Media), fill = Gender)) +
-  ggridges::geom_density_ridges(quantile_lines = TRUE, quantiles = 2, alpha = 0.7) + 
+  ggplot(aes(Avg_Daily_Usage_Hours, 
+             as.factor(Conflicts_Over_Social_Media), 
+             fill = Gender)) +
+  ggridges::geom_density_ridges(quantile_lines = TRUE, 
+                                quantiles = 2, 
+                                alpha = 0.7) + 
   labs(
     x = "Average Daily Usage (Hours)", 
     y = "Conflicts over Social Media", 
