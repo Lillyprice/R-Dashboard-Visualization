@@ -55,7 +55,7 @@ library(bslib)
 
 ```{r}
 # Reading in the data 
-social <- read_csv("C:/Users/lilly/GitRepo/Students Social Media Addiction.csv", show_col_types = FALSE)
+social <- read_csv("Students_Social_Media_Addiction.csv", show_col_types = FALSE)
 social <- social |>
   group_by(Student_ID) |>
   slice(1) |>
