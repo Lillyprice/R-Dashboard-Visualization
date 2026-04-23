@@ -502,16 +502,12 @@ reg_social |>
 We have over 100 countries and 7 total regions. A majority of our data is coming from Asia and Europe. It appears that Mexico has the least amount of average sleep and the highest average screen time, while Germany is the opposite. There does appear to be a relationship between average hours of screen time and the amount of sleep people get. Region may slightly effect this.
 :::
 
-
-
-
 # Gender
 
-<<<<<<< HEAD
 ## Row 
 
 ### Column {width="50%"}
-=======
+
 ## Row {height="20%"}
 
 ```{r}
@@ -571,13 +567,12 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
     values = c("#B173A0", "#C799BC"))
 ```
 
-<<<<<<< HEAD
 ::: {.card title= "About This Data"}
 The average mental health of male students is slightly higher than that of female students according to the graph. However, both genders have an average mental health score above 6 and below 7 indicating that the difference in average mental health scores between genders may not be significant. 
 :::
 =======
 ### Column {width="50%"}
->>>>>>> ac02069eba0233d9bc18ec5349c838490ba47f64
+
 
 ```{r}
 #| title: "Daily Usage and Conflicts over Social Media across Gender"
