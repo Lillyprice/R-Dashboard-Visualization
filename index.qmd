@@ -499,7 +499,7 @@ reg_social |>
 ## Row {height="20%"}
 
 ::: {.card title="About This Data"}
-We have over 100 countries and 7 total regions.
+We have over 100 countries and 7 total regions. A majority of our data is coming from Asia and Europe. It appears that Mexico has the least amount of average sleep and the highest averge screen time, while Germany is the opposite.
 :::
 
 
@@ -552,7 +552,7 @@ list(
 ## Row {height="40%"}
 
 ### Column {width="40%"}
->>>>>>> 5662cd2d30d6f8f5e35d4c49be0e99b797b3000f
+
 
 ```{r}
 #| title: Average Mental Health Score by Gender
