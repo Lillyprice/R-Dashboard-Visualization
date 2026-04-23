@@ -496,7 +496,8 @@ reg_social |>
 avg_conf_t = social |> 
   group_by(Gender) |>
   summarise(
-    avg_conf = mean(Conflicts_Over_Social_Media, na.rm = TRUE)) |>
+    avg_conf = round(mean(Conflicts_Over_Social_Media, na.rm = TRUE),
+                     2)) |>
   pivot_wider(
     names_from = "Gender",
     values_from = "avg_conf"
@@ -521,6 +522,10 @@ list(
   value = avg_conf_t$Female
 )
 ```
+
+## Row {height="40%"}
+
+### Column {width="40%"}
 
 ```{r}
 #| title: Average Mental Health Score by Gender
