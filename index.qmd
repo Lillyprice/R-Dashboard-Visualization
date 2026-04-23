@@ -158,7 +158,7 @@ ggplot(useage_summary,
   geom_col(position = position_dodge(width = 0.9), width = 0.8) +
   labs(
     x = "Mental Health Score", 
-    y = "Average Value (Hours)", 
+    y = "The Average Value (Hours)", 
     fill = "Measure"
   ) +  scale_fill_manual(
     values = c("#8C9A6E", "#A8BFA3"))
@@ -485,6 +485,42 @@ reg_social |>
 
 
 # Gender
+
+## Row {height="20%"}
+
+```{r}
+#| content: valuebox
+#| title: Avg Conflicts on Social Media Amongst Male Students
+
+# A new dataframe created to display the avg social media conflicts per gender 
+avg_conf_t = social |> 
+  group_by(Gender) |>
+  summarise(
+    avg_conf = mean(Conflicts_Over_Social_Media, na.rm = TRUE)) |>
+  pivot_wider(
+    names_from = "Gender",
+    values_from = "avg_conf"
+  )
+
+# Valuebox
+list(
+  icon  = "people-fill",
+  color = "danger", 
+  value = avg_conf_t$Male
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: Avg Conflicts on Social Media Amongst Female Students
+
+# Valuebox
+list(
+  icon  = "people-fill",
+  color = "danger", 
+  value = avg_conf_t$Female
+)
+```
 
 ```{r}
 #| title: Average Mental Health Score by Gender
