@@ -13,7 +13,7 @@ format:
     scrolling: true
     embed-resources: true
 editor_options:
-  chunk_output_type: console
+  chunk_output_type: inline
 --- 
 
 ```{r}
@@ -182,7 +182,12 @@ social <- social |>
                             levels = c("High School", "Undergraduate", "Graduate")))
 ```
 
+## Row {height="20%"}
 
+
+::: {.card title="About This Data"}
+This dataset contains **705 student responses**. Here we have general graphs summarizing a majority of the data. We found that more sleep and less hours slept led to a higher mental health score. This means that those who are happier sleep more and spend less time on their phones. We have the most observations for the 19 year old age group.
+:::
 
 # Students
 
@@ -214,8 +219,8 @@ social |>
     x = "Academic Level", 
     y = "Average Daily Usage (Hours)"
   ) + 
+  theme(legend.position = "false") +
   scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray") + 
-  theme(legend.position = "false") + 
   coord_flip()
 ```
 
@@ -256,6 +261,13 @@ social |>
   theme(legend.position = "none", 
         axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+## Row {height="20%"}
+
+::: {.card title="About This Data"}
+Students prefer TikTok and Instagram as their most used platforms. As academic level increases, so does the effect of social media on academic performance. Instagram is the most used social media for all grade levels, but high school does not use facebook at all.
+:::
+
 
 
 # Countries 
@@ -391,7 +403,7 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
   ) +
   guides(
     color = guide_legend(
-      nrow = 1,
+      nrow = 2,
       override.aes = list(
         shape = rep(21, length(unique(region_summary$Region)))
       )
@@ -482,7 +494,20 @@ reg_social |>
 ```
 
 
+## Row {height="20%"}
+
+::: {.card title="About This Data"}
+We have over 100 countries and 7 total regions.
+:::
+
+
+
+
 # Gender
+
+## Row 
+
+### Column {width="50%"}
 
 ```{r}
 #| title: Average Mental Health Score by Gender
@@ -500,6 +525,8 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
   scale_fill_manual(
     values = c("#B173A0", "#C799BC"))
 ```
+
+### Column {width="50%"}
 
 ```{r}
 #| title: "Daily Usage and Conflicts over Social Media across Gender"
