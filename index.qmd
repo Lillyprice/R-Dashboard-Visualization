@@ -515,15 +515,15 @@ We have over 100 countries and 7 total regions. A majority of our data is coming
 
 # Gender
 
-<<<<<<< HEAD
+
 ## Row 
 
 ### Column {width="50%"}
-=======
+
 
 ## Row 
 
->>>>>>> e8d5c480cb519b8a9b7556d33b8d7531fef0aee7
+
 
 ## Row {height="20%"}
 
@@ -584,10 +584,6 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
     values = c("#B173A0", "#C799BC"))
 ```
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e8d5c480cb519b8a9b7556d33b8d7531fef0aee7
 ::: {.card title= "About This Data"}
 The average mental health of male students is slightly higher than that of female students according to the graph. However, both genders have an average mental health score above 6 and below 7 indicating that the difference in average mental health scores between genders may not be significant. 
 :::
