@@ -57,8 +57,10 @@ library(here)
 ---
 
 **Additional Resources For Further Investigation**
-https://www.nature.com/articles/s41598-026-35779-w
-https://link.springer.com/article/10.1007/s10900-026-01578-7
+
+- [Nature: Social Media & Sleep Study](https://www.nature.com/articles/s41598-026-35779-w)
+- [Springer: Community Health Impact](https://link.springer.com/article/10.1007/s10900-026-01578-7)
+
 
 ---
 
