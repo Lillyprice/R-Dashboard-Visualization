@@ -517,7 +517,7 @@ list(
 
 # Valuebox
 list(
-  icon  = "people-fill",
+  icon  = "exclamation-triangle-fill",
   color = "danger", 
   value = avg_conf_t$Female
 )
