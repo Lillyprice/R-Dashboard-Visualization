@@ -506,6 +506,7 @@ reg_social |>
 
 ## Row {height="20%"}
 
+
 ::: {.card title="About This Data"}
 We have over 100 countries and 7 total regions. A majority of our data is coming from Asia and Europe. It appears that Mexico has the least amount of average sleep and the highest average screen time, while Germany is the opposite. There does appear to be a relationship between average hours of screen time and the amount of sleep people get. Region may slightly effect this.
 :::
@@ -578,7 +579,7 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
     values = c("#B173A0", "#C799BC"))
 ```
 
-<<<<<<< HEAD
+
 ::: {.card title= "About This Data"}
 The average mental health of male students is slightly higher than that of female students according to the graph. However, both genders have an average mental health score above 6 and below 7 indicating that the difference in average mental health scores between genders may not be significant. 
 :::
@@ -610,9 +611,5 @@ social |>
 ```
 
 ::: {.card title= "About This Data"}
-<<<<<<< HEAD
-According to the graph, the range is roughly similar across each gender per each amount of conflict over social media with the exception of zero conflicts. Within zero conflicts, there is only data reflecting male students (which the range is roughly zero to three hours with a mean of roughly 1.75 hours). This indicates, that female students engage in at least one conflict per daily use. Furthermore, with the exception of zero conflicts, the mean is roughly the same across genders per conflict increments. There is no clear pattern of lesser daily usage hours 
-=======
 According to the graph, the range is roughly similar across each gender per each amount of conflict over social media with the exception of zero conflicts. Within zero conflicts, there is only data reflecting male students (which the range is roughly zero to three hours with a mean of roughly 1.75 hours). This indicates, that female students engage in at least one conflict per daily use. Furthermore, with the exception of zero conflicts, the mean is roughly the same across genders per conflict increments. There is no clear pattern of lesser or more daily usage hours within gender per conflicts. Lastly, due to the range and mean being so similar across genders, we can see that there is a clear pattern between the average daily usage hours and conflicts over social media. The longer the daily usage is, the more conflicts over social media. 
->>>>>>> 9ae51662e98cb628e7b025079840b98a27f17daf
 :::
