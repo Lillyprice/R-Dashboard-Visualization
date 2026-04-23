@@ -571,7 +571,13 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
     values = c("#B173A0", "#C799BC"))
 ```
 
+<<<<<<< HEAD
+::: {.card title= "About This Data"}
+The average mental health of male students is slightly higher than that of female students according to the graph. However, both genders have an average mental health score above 6 and below 7 indicating that the difference in average mental health scores between genders may not be significant. 
+:::
+=======
 ### Column {width="50%"}
+>>>>>>> ac02069eba0233d9bc18ec5349c838490ba47f64
 
 ```{r}
 #| title: "Daily Usage and Conflicts over Social Media across Gender"
@@ -596,3 +602,6 @@ social |>
   theme_minimal()
 ```
 
+::: {.card title= "About This Data"}
+According to the graph, the range is roughly similar across each gender per each amount of conflict over social media with the exception of zero conflicts. Within zero conflicts, there is only data reflecting male students (which the range is roughly zero to three hours with a mean of roughly 1.75 hours). This indicates, that female students engage in at least one conflict per daily use. Furthermore, with the exception of zero conflicts, the mean is roughly the same across genders per conflict incraments. There is no clear pattern of lesser daily usage hours 
+:::
