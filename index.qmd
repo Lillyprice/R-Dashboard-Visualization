@@ -499,7 +499,7 @@ reg_social |>
 ## Row {height="20%"}
 
 ::: {.card title="About This Data"}
-We have over 100 countries and 7 total regions. A majority of our data is coming from Asia and Europe. It appears that Mexico has the least amount of average sleep and the highest averge screen time, while Germany is the opposite.
+We have over 100 countries and 7 total regions. A majority of our data is coming from Asia and Europe. It appears that Mexico has the least amount of average sleep and the highest average screen time, while Germany is the opposite. There does appear to be a relationship between average hours of screen time and the amount of sleep people get. Region may slightly effect this.
 :::
 
 
