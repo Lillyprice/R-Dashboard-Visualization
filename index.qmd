@@ -409,10 +409,12 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
 ### Column {width="30%"}
 
 ```{r}
+#| title: The Proportion of Students per Region 
+
 # New dataframe combining two dataframes 
 reg_social = left_join(social, region_summary)
 
-# Table of the proportion of students per country
+# Table of the proportion of students per region
 reg_social |>
   group_by(Region) |>
   summarise(n = n_distinct(Student_ID)) |>
