@@ -206,7 +206,7 @@ social <- social |>
 ### Column {width="50%"}
 
 ```{r}
-#| title: Most Used Platfrom by Academic Level
+#| title: Most Used Platform by Academic Level
 
 # Most Used Platform per academic level
 social |>
@@ -603,5 +603,5 @@ social |>
 ```
 
 ::: {.card title= "About This Data"}
-According to the graph, the range is roughly similar across each gender per each amount of conflict over social media with the exception of zero conflicts. Within zero conflicts, there is only data reflecting male students (which the range is roughly zero to three hours with a mean of roughly 1.75 hours). This indicates, that female students engage in at least one conflict per daily use. Furthermore, with the exception of zero conflicts, the mean is roughly the same across genders per conflict incraments. There is no clear pattern of lesser daily usage hours 
+According to the graph, the range is roughly similar across each gender per each amount of conflict over social media with the exception of zero conflicts. Within zero conflicts, there is only data reflecting male students (which the range is roughly zero to three hours with a mean of roughly 1.75 hours). This indicates, that female students engage in at least one conflict per daily use. Furthermore, with the exception of zero conflicts, the mean is roughly the same across genders per conflict increments. There is no clear pattern of lesser or more daily usage hours within gender per conflicts. Lastly, due to the range and mean being so similar across genders, we can see that there is a clear pattern between the average daily usage hours and conflicts over social media. The longer the daily usage is, the more conflicts over social media. 
 :::
