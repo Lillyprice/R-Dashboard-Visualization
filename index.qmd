@@ -158,7 +158,7 @@ ggplot(useage_summary,
   geom_col(position = position_dodge(width = 0.9), width = 0.8) +
   labs(
     x = "Mental Health Score", 
-    y = "Average value (Hours)", 
+    y = "The Average Value (Hours)", 
     fill = "Measure"
   ) +  scale_fill_manual(
     values = c("#8C9A6E", "#A8BFA3"))
@@ -421,10 +421,12 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
 ### Column {width="30%"}
 
 ```{r}
+#| title: The Proportion of Students per Region 
+
 # New dataframe combining two dataframes 
 reg_social = left_join(social, region_summary)
 
-# Table of the proportion of students per country
+# Table of the proportion of students per region
 reg_social |>
   group_by(Region) |>
   summarise(n = n_distinct(Student_ID)) |>
@@ -505,9 +507,52 @@ We have over 100 countries and 7 total regions.
 
 # Gender
 
+<<<<<<< HEAD
 ## Row 
 
 ### Column {width="50%"}
+=======
+## Row {height="20%"}
+
+```{r}
+#| content: valuebox
+#| title: Avg Conflicts on Social Media Amongst Male Students
+
+# A new dataframe created to display the avg social media conflicts per gender 
+avg_conf_t = social |> 
+  group_by(Gender) |>
+  summarise(
+    avg_conf = round(mean(Conflicts_Over_Social_Media, na.rm = TRUE),
+                     2)) |>
+  pivot_wider(
+    names_from = "Gender",
+    values_from = "avg_conf"
+  )
+
+# Valuebox
+list(
+  icon  = "people-fill",
+  color = "danger", 
+  value = avg_conf_t$Male
+)
+```
+
+```{r}
+#| content: valuebox
+#| title: Avg Conflicts on Social Media Amongst Female Students
+
+# Valuebox
+list(
+  icon  = "exclamation-triangle-fill",
+  color = "danger", 
+  value = avg_conf_t$Female
+)
+```
+
+## Row {height="40%"}
+
+### Column {width="40%"}
+>>>>>>> 5662cd2d30d6f8f5e35d4c49be0e99b797b3000f
 
 ```{r}
 #| title: Average Mental Health Score by Gender
