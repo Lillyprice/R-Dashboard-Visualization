@@ -78,7 +78,7 @@ social <- social |>
 
 # Overall Effects
 
-## Row {height="20%"}
+## Row {height="15%"}
 
 
 ```{r}
@@ -89,7 +89,8 @@ social <- social |>
 list(
   icon  = "people-fill",
   color = "danger", 
-  value = max(social$Student_ID)
+  value = max(social$Student_ID),
+  width = 3
 )
 ```
 
@@ -101,7 +102,8 @@ list(
 list(
   icon  = "heart-pulse-fill",
   color = "warning", 
-  value = round(mean(social$Mental_Health_Score))
+  value = round(mean(social$Mental_Health_Score)),
+  width = 3
 )
 ```
 
@@ -113,13 +115,14 @@ list(
 list(
   icon  = "exclamation-triangle-fill",
   color = "danger", 
-  value = round(mean(social$Addicted_Score))
+  value = round(mean(social$Addicted_Score)),
+  width = 3
 )
 ```
 
-## Row {height="30%"}
+## Row {height="15%"}
 
-### Column {width="20%"}
+### Column {width="50%"}
 
 ```{r}
 #| title: Amount of Students per Age Group
@@ -138,7 +141,7 @@ social |>
   )
 ```
 
-### Column {width="30%"}
+### Column {width="50%"}
 
 ```{r}
 #| title: Average Sleep and Daily Usage by Mental Health Score
@@ -174,7 +177,7 @@ ggplot(useage_summary,
     values = c("#8C9A6E", "#A8BFA3"))
 ```
 
-## Row {height="30%"}
+## Row {height="15%"}
 
 ```{r}
 #| title: Table of Raw Data
@@ -192,7 +195,7 @@ social <- social |>
                             levels = c("High School", "Undergraduate", "Graduate")))
 ```
 
-## Row {height="20%"}
+## Row {height="15%"}
 
 
 
@@ -200,7 +203,7 @@ social <- social |>
 
 ## Row
 
-### Column {width="30%"}
+### Column {width="33%"}
 
 ```{r}
 # Creating levels and a factor function for my bar chart
@@ -210,7 +213,7 @@ social <- social |>
                             levels = c("High School", "Undergraduate", "Graduate")))
 ```
 
-### Column {width="30%"}
+### Column {width="33%"}
 
 ```{r}
 #| title: Most Used Platform by Academic Level
@@ -231,7 +234,7 @@ social |>
   coord_flip()
 ```
 
-### Column {width="30%"}
+### Column {width="33%"}
 
 ```{r}
 #| title: Affect of Social Media Use on Academic Performance by Grade Level
@@ -249,7 +252,7 @@ social |>
   labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
 ```
 
-## Row
+## Row {hieght= 15%}
 
 ```{r}
 #| title: How Often The Platforms are Used Amongst Respondents
@@ -269,7 +272,7 @@ social |>
         axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Row {height="20%"}
+## Row {height="15%"}
 
 
 
@@ -277,7 +280,7 @@ social |>
 
 # Countries 
 
-## Row {height = "30%"}
+## Row {height = "15%"}
 
 ```{r}
 # Countries
@@ -320,7 +323,8 @@ social <- social |>
 list(
   icon = "globe", 
   color = "danger", 
-  value = length(unique(social$Country))
+  value = length(unique(social$Country)),
+  width = 3
 )
 ```
 
@@ -332,13 +336,14 @@ list(
 list(
   icon = "compass",
   color = "warning", 
-  value = length(unique(region_df$Region))
+  value = length(unique(region_df$Region)),
+  width = 3
 )
 ```
 
-## Row {height="30%"}
+## Row {height="20%"}
 
-### Column {width="30%"}
+### Column {width="50%"}
 
 ```{r}
 #| title: Hours Slept vs Hours Spent on Social Media by Country 
@@ -423,7 +428,7 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
   )
 ```
 
-### Column {width="30%"}
+### Column {width="50%"}
 
 ```{r}
 #| title: The Proportion of Students per Region 
@@ -510,14 +515,14 @@ reg_social |>
 
 ## Row 
 
-### Column {width="20%"}
+### Column {width="33%"}
 
 
 ## Row 
 
 
 
-## Row {height="20%"}
+## Row {height="15%"}
 
 ```{r}
 #| content: valuebox
@@ -538,7 +543,8 @@ avg_conf_t = social |>
 list(
   icon  = "people-fill",
   color = "danger", 
-  value = avg_conf_t$Male
+  value = avg_conf_t$Male, 
+  width = 3
 )
 ```
 
@@ -550,13 +556,13 @@ list(
 list(
   icon  = "exclamation-triangle-fill",
   color = "danger", 
-  value = avg_conf_t$Female
-)
+  value = avg_conf_t$Female,
+  list = 3)
 ```
 
-## Row {height="20%"}
+## Row {height="15%"}
 
-### Column {width="20%"}
+### Column {width="33%"}
 
 
 ```{r}
@@ -577,7 +583,7 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
 ```
 
 
-### Column {width="20%"}
+### Column {width="33%"}
 
 
 ```{r}
