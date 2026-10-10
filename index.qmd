@@ -6,9 +6,9 @@ format:
   dashboard:
     nav-buttons: [github]
     github: https://github.com/Lillyprice/R-Dashboard-Visualization
-    theme:
-      - sandstone
-      - theme/custom.color
+    theme: default
+    page-layout: full
+    css: styles.css
     orientation: rows
     scrolling: true
     embed-resources: true
@@ -37,6 +37,7 @@ library(colorspace)
 library(ggrepel)
 library(bslib)
 library(here)
+library(ggthemes)
 ```
 
 
@@ -78,34 +79,39 @@ social <- social |>
 
 # Overall Effects
 
-## Row {height="15%"}
+## Row 
+
+### Column {width= "33%"}
 
 
 ```{r}
 #| content: valuebox
 #| title: Total Observations
+#| class: valuebox
 
 # Valuebox
 list(
   icon  = "people-fill",
-  color = "danger", 
   value = max(social$Student_ID),
   width = 3
 )
 ```
 
+### Column {width= "33%"}
+
 ```{r}
 #| content: valuebox
 #| title: Mean Mental Health Score 
-
+#| class: valuebox
 # Valuebox 
 list(
   icon  = "heart-pulse-fill",
-  color = "warning", 
   value = round(mean(social$Mental_Health_Score)),
   width = 3
 )
 ```
+
+### Column {width= "33%"}
 
 ```{r}
 #| content: valuebox
@@ -120,7 +126,7 @@ list(
 )
 ```
 
-## Row {height="15%"}
+## Row 
 
 ### Column {width="50%"}
 
@@ -130,15 +136,12 @@ list(
 # Making a line graph of the total amount of students per age group
 social |>
   count(Age) |>
-  mutate( p = n/sum(n)) |>
-  ggplot(aes(x = Age, y = n, group = 1)) +
-  geom_line(linewidth = 2, color = "#F7A8B8") + 
-  geom_point(size = 3, color = "#EE8FC6") + 
-  geom_point(size = 6, color = "#F7A8B8", shape = "circle open") +
-  labs(
-    x = "Age Group", 
-    y = "Amount"
-  )
+  ggplot(aes(Age, n)) +
+  geom_line(linewidth = 1.5, color = "#4A78A6") +
+  geom_point(size = 3, color = "#6AA6A6") +
+  labs(x = "Age Group", y = "Count") +
+  theme_minimal()
+
 ```
 
 ### Column {width="50%"}
@@ -166,75 +169,54 @@ useage_summary = social |>
     names_to = "measure", 
     values_to = "average") 
 
-ggplot(useage_summary, 
-       aes(x = MH_cate, y = average, fill = measure)) +
-  geom_col(position = position_dodge(width = 0.9), width = 0.8) +
-  labs(
-    x = "Mental Health Score", 
-    y = "The Average Value (Hours)", 
-    fill = "Measure"
-  ) +  scale_fill_manual(
-    values = c("#8C9A6E", "#A8BFA3"))
+ggplot(useage_summary, aes(MH_cate, average, fill = measure)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#4A78A6", "#6AA6A6")) +
+  labs(x = "Mental Health Category", y = "Average (Hours)") +
+  theme_minimal()
 ```
 
-## Row {height="15%"}
-
-```{r}
-#| title: Table of Raw Data
-
-# Makes our data look a lot nicer and restricts it to the first five rows
-social_table = social[1:5, ]
-
-kable(social_table, format = "html") |>
-  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
-  
-# Creating levels and a factor function for my bar chart
-social <- social |>
-  mutate(
-    Academic_Level = factor(Academic_Level, 
-                            levels = c("High School", "Undergraduate", "Graduate")))
-```
-
-## Row {height="15%"}
-
+## Row 
 
 
 # Students
 
 ## Row
 
-### Column {width="33%"}
-
-```{r}
-# Creating levels and a factor function for my bar chart
-social <- social |>
-  mutate(
-    Academic_Level = factor(Academic_Level, 
-                            levels = c("High School", "Undergraduate", "Graduate")))
-```
-
-### Column {width="33%"}
+### Column {width="50%"}
 
 ```{r}
 #| title: Most Used Platform by Academic Level
 
-# Most Used Platform per academic level
+social <- social |>
+  mutate(
+    Academic_Level = factor(
+      Academic_Level,
+      levels = c("High School", "Undergraduate", "Graduate")
+    )
+  )
+
 social |>
-  ggplot(aes(x = Academic_Level, 
-             y = Avg_Daily_Usage_Hours, 
-             fill = Most_Used_Platform)) + 
-  geom_col(position = "fill")+ 
+  ggplot(aes(
+    x = Academic_Level,
+    y = Avg_Daily_Usage_Hours,
+    fill = Most_Used_Platform
+  )) +
+  geom_col(position = "fill") +
+  scale_fill_paletteer_d("ggthemes::Classic_20") +
   labs(
-    Title = "The Average Daily Usage amongst Academic Level Across the Most Used Platforms", 
-    x = "Academic Level", 
-    y = "Average Daily Usage (Hours)"
-  ) + 
-  theme(legend.position = "false") +
-  scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray") + 
+    title = "The Average Daily Usage amongst Academic Level Across the Most Used Platforms",
+    x = "Academic Level",
+    y = "Average Daily Usage (Proportion)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
   coord_flip()
+
+
 ```
 
-### Column {width="33%"}
+### Column {width="50%"}
 
 ```{r}
 #| title: Affect of Social Media Use on Academic Performance by Grade Level
@@ -242,17 +224,16 @@ social |>
 # Creating a continuous bar chart 
 social |>
   count(Academic_Level, Affects_Academic_Performance) |>
-  ggplot(aes(x = n, y = fct_rev(Academic_Level), 
-             fill = Affects_Academic_Performance)) + 
+  ggplot(aes(n, fct_rev(Academic_Level),
+             fill = Affects_Academic_Performance)) +
   geom_col(position = "fill") +
-  scale_fill_manual(
-    values = c("#8074A8", "#C46487"), 
-    guide = guide_legend(reverse = TRUE)) + 
-  scale_x_continuous(labels = label_percent()) + 
-  labs(x = NULL, y = NULL, fill = "Acedemic Academic Performance")
+  scale_fill_manual(values = c("#4A78A6", "#C27A7A")) +
+  labs(x = "Proportion", y = "Academic Level") +
+  theme_minimal()
+
 ```
 
-## Row {hieght= 15%}
+## Row
 
 ```{r}
 #| title: How Often The Platforms are Used Amongst Respondents
@@ -265,14 +246,14 @@ social |>
              y = n, 
              fill = Most_Used_Platform)) + 
   geom_col() + 
-  scale_fill_paletteer_d("ggthemes::Purple_Pink_Gray") + 
+  scale_fill_paletteer_d("ggthemes::Classic_20") + 
   labs(x = "Platform", y = "Count") +
   theme_minimal() + 
   theme(legend.position = "none", 
         axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-## Row {height="15%"}
+## Row 
 
 
 
@@ -280,10 +261,27 @@ social |>
 
 # Countries 
 
-## Row {height = "15%"}
+
+
+## Row 
+
+### Column {width= "50%"}
 
 ```{r}
-# Countries
+#| content: valuebox
+#| title: Total Countries
+#| class: valuebox
+# Valuebox
+list(
+  icon = "globe", 
+  value = length(unique(social$Country)),
+  width = 3
+)
+```
+
+### Column {width= "50%"}
+
+```{r}
 
 assign_region <- function(country_vec) {
  
@@ -317,36 +315,27 @@ social <- social |>
 
 ```{r}
 #| content: valuebox
-#| title: Total Countries
-
-# Valuebox
-list(
-  icon = "globe", 
-  color = "danger", 
-  value = length(unique(social$Country)),
-  width = 3
-)
-```
-
-```{r}
-#| content: valuebox
 #| title: Total Regions
+#| class: valuebox
 
 # Valuebox
 list(
   icon = "compass",
-  color = "warning", 
   value = length(unique(region_df$Region)),
   width = 3
 )
 ```
 
-## Row {height="20%"}
+## Row
 
-### Column {width="50%"}
+### Column {width = "60%"}
 
 ```{r}
+# Countries
 #| title: Hours Slept vs Hours Spent on Social Media by Country 
+
+
+
  
 # Highlights the countries 
 country_highlight <- c(
@@ -372,13 +361,13 @@ region_summary <- region_summary |>
 
 # Colors
 Region_cols <- c(
-  "#F7A8B8",
-  "#EE8FC6",
-  "#E376D4",
-  "#CC63D9",
-  "#A955D4",  
-  "#843FBE",  
-  "#622A9A"
+  "#4A78A6",
+  "#6AA6A6",
+  "#C27A7A",
+  "#555555",
+  "#8FA9C9",  
+  "#C9A27A",  
+  "#3F6F6F"
 )
 
 # Plotting the region summary
@@ -428,7 +417,7 @@ ggplot(region_summary, aes(avg_daily_use, avg_sleep)) +
   )
 ```
 
-### Column {width="50%"}
+### Column {width="40%"}
 
 ```{r}
 #| title: The Proportion of Students per Region 
@@ -447,49 +436,49 @@ reg_social |>
     decimals = 1
   ) |> 
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#4A78A6", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "East Asia & Pacific"
     )
   ) |>   
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#6AA6A6", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "Europe & Central Asia"
     )
   ) |>    
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#C27A7A", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "Latin America & Caribbean"
     )
   ) |>    
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#555555", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "Middle East & North Africa"
     )
   ) |>    
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#8FA9C9", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "North America"
     )
   ) |>    
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#C9A27A", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "South Asia"
     )
   ) |>    
   tab_style(
-    style = cell_text(color = "#C46487", weight = "bold"),
+    style = cell_text(color = "#3F6F6F", weight = "bold"),
     locations = cells_body(
       columns = everything(),
       rows = Region == "Sub-Saharan Africa"
@@ -506,8 +495,7 @@ reg_social |>
 ```
 
 
-## Row {height="20%"}
-
+## Row 
 
 
 # Gender
@@ -515,19 +503,9 @@ reg_social |>
 
 ## Row 
 
-### Column {width="33%"}
-
-
-## Row 
-
-
-
-## Row {height="15%"}
+### Column {width="50%"}
 
 ```{r}
-#| content: valuebox
-#| title: Avg Conflicts on Social Media Amongst Male Students
-
 # A new dataframe created to display the avg social media conflicts per gender 
 avg_conf_t = social |> 
   group_by(Gender) |>
@@ -538,34 +516,44 @@ avg_conf_t = social |>
     names_from = "Gender",
     values_from = "avg_conf"
   )
+```
+
+
+
+```{r}
+#| content: valuebox
+#| title: Avg Conflicts (Female)
+#| class: valuebox
 
 # Valuebox
 list(
   icon  = "people-fill",
-  color = "danger", 
-  value = avg_conf_t$Male, 
+  value = avg_conf_t$Female, 
   width = 3
 )
 ```
 
+### Column {width= "50%"}
+
 ```{r}
 #| content: valuebox
-#| title: Avg Conflicts on Social Media Amongst Female Students
+#| title: Avg Conflicts (Male)
 
 # Valuebox
 list(
-  icon  = "exclamation-triangle-fill",
-  color = "danger", 
-  value = avg_conf_t$Female,
-  list = 3)
+  icon  = "people-fill",
+  value = avg_conf_t$Male,
+  width = 3)
 ```
 
-## Row {height="15%"}
+## Row
 
-### Column {width="33%"}
-
+### Column {width= "50%"}
 
 ```{r}
+
+
+
 #| title: Average Mental Health Score by Gender
 
 # Average Mental Health Score by Gender
@@ -579,11 +567,12 @@ ggplot(plot_mh, aes( x = Gender, y = avg_mh, fill = Gender)) +
        x = "Gender",
        y = "Average Mental Health Score") + 
   scale_fill_manual(
-    values = c("#B173A0", "#C799BC"))
+    values = c("#B173A0", "#4A78A6")) +
+  theme_minimal()
 ```
 
 
-### Column {width="33%"}
+### Column {width="50%"}
 
 
 ```{r}
@@ -603,7 +592,7 @@ social |>
     fill = "Gender"
   ) +
   scale_fill_manual(
-    values = c("Male" = "#E6A8A1", 
+    values = c("Male" = "#4A78A6", 
                "Female" = "#A75D74"), 
     guide = guide_legend(reverse = TRUE)) + 
   theme_minimal()

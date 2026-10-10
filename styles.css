@@ -1,0 +1,19 @@
+/* Valuebox styling */
+.valuebox {
+  background-color: #F2F2F2 !important;
+  color: #555555 !important;
+  padding: 0.6rem !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* White background */
+body {
+  background-color: #FFFFFF !important;
+}
+
+/* Clean spacing */
+.section {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
